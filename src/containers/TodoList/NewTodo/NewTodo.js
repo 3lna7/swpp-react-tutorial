@@ -1,5 +1,6 @@
-import React, {Component} from "react";
+import React, {Component} from 'react';
 import './NewTodo.css'
+import {Redirect} from 'react-router-dom';
 
 class NewTodo extends Component{
     state = {
@@ -8,19 +9,32 @@ class NewTodo extends Component{
         submitted: false,
     }
 
+    //We want to handle when the user submit the form
+    postTodoHandler = () => {
+        const data = {
+            title: this.state.title, content: this.state.content
+        };
+        alert('Submitted\n' + data.title + '\n' + data.content);
+        this.setState({submitted: true});
+        //instead of id clause
+        //this.props.history.push("/todos")
+    }
+
     render(){
+        //instead of this we can do the above part
+        if(this.state.submitted){
+            return <Redirect to='/todos' />        
+        }
         return(
             <div className="NewTodo">
                 <h1>Add a Todo</h1>
                 <label>Title</label>
-                <input type="text" value={this.state.title}
-                    onChange={(event) => this.setState({title: event.target.value})} />
+                <input type="text" value={this.state.title} onChange={(event) => this.setState({title: event.target.value})} />
                 <label>Content</label>
-                <textarea row="4" type="text" value={this.state.content}
-                    onChange={(event) => this.setState({content: event.target.value})} />
-                <button onClick={() => alert("submitted!")}>Submit</button>
+                <textarea row="4" type="text" value={this.state.content} onChange={(event) => this.setState({content: event.target.value})} />
+                <button onClick={() => this.postTodoHandler()}>Submit</button>
             </div>
-        )
+        );
     }
-}
+};
 export default NewTodo;

@@ -21,6 +21,6 @@ const TodoDetail = (props) => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 export default TodoDetail;
